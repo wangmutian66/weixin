@@ -31,6 +31,7 @@ class IndexController extends Controller {
     public function reponseMsg(){
         //1.获取到微信推送过来的post数据（xml）
         $postArr = $GLOBALS['HTTP_RAW_POST_DATA'];
+
         //2.处理消息类型，并设置回复类型和内容
 //        <xml>
 //        <ToUserName>< ![CDATA[toUser] ]></ToUserName>
@@ -41,6 +42,7 @@ class IndexController extends Controller {
 //        </xml>
 
         $postObj = simplexml_load_string($postArr);
+        file_put_contents("./Public/post.txt",$postObj->Content);
 //        $postObj->ToUserName = '';
 //        $postObj->FromUserName = '';
 //        $postObj->CreateTime = '';
@@ -51,26 +53,51 @@ class IndexController extends Controller {
         if(strtolower($postObj->MsgType) == 'event'){
 
             //如果是关注subscribe事件
-            if(strtolower($postObj->Event) == 'subscribe'){
-                //回复用户消息
-                $toUser = $postObj->FromUserName;
-                $fromUser = $postObj->ToUserName;
-                $time = time();
-                $MsgType = 'text';
-                $Content = '欢迎关注我们的微信公众账号';
-                $template = "<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%s</CreateTime><MsgType><![CDATA[%s]]></MsgType><Content><![CDATA[%s]]></Content></xml>";
+//            if(strtolower($postObj->Event) == 'subscribe'){
+//                //回复用户消息
+//                $toUser = $postObj->FromUserName;
+//                $fromUser = $postObj->ToUserName;
+//                $time = time();
+//                $MsgType = 'text';
+//                $Content = '欢迎关注我们的微信公众账号';
+//                $template = "<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%s</CreateTime><MsgType><![CDATA[%s]]></MsgType><Content><![CDATA[%s]]></Content></xml>";
+//
+//                $info = sprintf($template,$toUser,$fromUser,$time,$MsgType,$Content);
+//                echo $info;
+//
+//            }
 
-                $info = sprintf($template,$toUser,$fromUser,$time,$MsgType,$Content);
-                echo $info;
 
-            }
+
+
+
+
+
+
         }
+
+        //回复用户消息
+        $toUser = $postObj->FromUserName;
+        $fromUser = $postObj->ToUserName;
+        $time = time();
+        $MsgType = 'text';
+        $Content = $postObj->Content;
+        $template = "<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%s</CreateTime><MsgType><![CDATA[%s]]></MsgType><Content><![CDATA[%s]]></Content></xml>";
+
+        $info = sprintf($template,$toUser,$fromUser,$time,$MsgType,$Content);
+        echo $info;
+
+
+
+
+
+
 
 
     }
 
 
-   
+
 
 
 
