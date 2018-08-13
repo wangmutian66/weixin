@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b1f482dd-b520-4a3d-bdf2-21e3bd501d06" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/Application/Home/Model/IndexModel.class.php" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php" afterPath="$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php" />
+      <change beforePath="$PROJECT_DIR$/Application/Runtime/Logs/Home/18_08_13.log" afterPath="$PROJECT_DIR$/Application/Runtime/Logs/Home/18_08_13.log" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,14 +19,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="IndexController.class.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IndexController.class.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="648">
-              <caret line="87" column="19" lean-forward="false" selection-start-line="87" selection-start-column="19" selection-end-line="87" selection-end-column="19" />
+            <state relative-caret-position="2686">
+              <caret line="158" column="26" lean-forward="false" selection-start-line="158" selection-start-column="13" selection-end-line="158" selection-end-column="26" />
               <folding>
-                <marker date="1534132941163" expanded="true" signature="446:465" ph="..." />
-                <marker date="1534132941163" expanded="true" signature="1561:1840" ph="..." />
+                <marker date="1534143059591" expanded="true" signature="446:465" ph="..." />
+                <marker date="1534143059591" expanded="true" signature="1757:2036" ph="..." />
+                <marker date="1534143059591" expanded="true" signature="4187:4468" ph="..." />
+                <marker date="1534143059591" expanded="true" signature="4187:4557" ph="..." />
+                <marker date="1534143059591" expanded="true" signature="4187:5040" ph="..." />
+                <marker date="1534143059591" expanded="true" signature="4557:5009" ph="..." />
+                <marker date="1534143059591" expanded="true" signature="4627:4672" ph="..." />
+                <marker date="1534143059591" expanded="true" signature="4627:4962" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IndexModel.class.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Application/Home/Model/IndexModel.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="32" lean-forward="false" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="32" />
+              <folding>
+                <marker date="1444618395934" expanded="true" signature="179:411" ph="..." />
+                <marker date="1444618395934" expanded="true" signature="463:689" ph="..." />
+                <marker date="1444618395934" expanded="true" signature="888:1087" ph="..." />
               </folding>
             </state>
           </provider>
@@ -59,6 +82,8 @@
       <list>
         <option value="$PROJECT_DIR$/Application/Home/Controller/test.php" />
         <option value="$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php" />
+        <option value="$PROJECT_DIR$/Application/Home/Model/IndexModel.php" />
+        <option value="$PROJECT_DIR$/Application/Home/Model/IndexModel.class.php" />
       </list>
     </option>
   </component>
@@ -69,7 +94,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="83" />
     <option name="y" value="125" />
     <option name="width" value="1400" />
@@ -114,7 +139,7 @@
               <item name="weixin" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Application" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Home" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Controller" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Model" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -128,6 +153,11 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\phpStudy\PHPTutorial\WWW\weixin\Application\Home\Model" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -154,15 +184,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1534126441124</updated>
-      <workItem from="1534126442735" duration="4880000" />
+      <workItem from="1534126442735" duration="11300000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4880000" />
+    <option name="totallyTimeSpent" value="11300000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="876" extended-state="7" />
+    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24027778" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -242,11 +272,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/Home/Controller/IndexController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="87" column="19" lean-forward="false" selection-start-line="87" selection-start-column="19" selection-end-line="87" selection-end-column="19" />
+        <state relative-caret-position="2686">
+          <caret line="158" column="26" lean-forward="false" selection-start-line="158" selection-start-column="13" selection-end-line="158" selection-end-column="26" />
           <folding>
-            <marker date="1534132941163" expanded="true" signature="446:465" ph="..." />
-            <marker date="1534132941163" expanded="true" signature="1561:1840" ph="..." />
+            <marker date="1534143059591" expanded="true" signature="446:465" ph="..." />
+            <marker date="1534143059591" expanded="true" signature="1757:2036" ph="..." />
+            <marker date="1534143059591" expanded="true" signature="4187:4468" ph="..." />
+            <marker date="1534143059591" expanded="true" signature="4187:4557" ph="..." />
+            <marker date="1534143059591" expanded="true" signature="4187:5040" ph="..." />
+            <marker date="1534143059591" expanded="true" signature="4557:5009" ph="..." />
+            <marker date="1534143059591" expanded="true" signature="4627:4672" ph="..." />
+            <marker date="1534143059591" expanded="true" signature="4627:4962" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ThinkPHP/Mode/Lite/Model.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="15" column="6" lean-forward="false" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Application/Home/Model/IndexModel.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="32" lean-forward="false" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="32" />
+          <folding>
+            <marker date="1444618395934" expanded="true" signature="179:411" ph="..." />
+            <marker date="1444618395934" expanded="true" signature="463:689" ph="..." />
+            <marker date="1444618395934" expanded="true" signature="888:1087" ph="..." />
           </folding>
         </state>
       </provider>
