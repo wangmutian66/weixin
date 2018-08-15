@@ -174,17 +174,17 @@ class IndexController extends Controller {
 
 
 
-        if($_SESSION['access_token'] && $_SESSION['expires_time']>time()){
-            //access_token 在session 并没有过期
-            return $_SESSION['access_token'];
-        }else{
+//        if($_SESSION['access_token'] && $_SESSION['expires_time']>time()){
+//            //access_token 在session 并没有过期
+//            return $_SESSION['access_token'];
+//        }else{
             $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appSecret";
             $res = file_get_contents($url);
             $arr = json_decode($res, true);
             $_SESSION['access_token'] = $arr['access_token'];
             $_SESSION['expires_time'] = time() + $arr['expires_in'] - 200;
             return $arr['access_token'];
-        }
+//        }
 
     }
 
@@ -326,5 +326,56 @@ class IndexController extends Controller {
     }
 
 
+    function getJsApiTicket(){
+        //如果session中保存有效的jsapi_ticket
+        if($_SESSION['jsapi_ticket_expire_time'] < time() && $_SESSION['jsapi_ticket']){
+
+            $jsapi_ticket = $_SESSION['jsapi_ticket'];
+        }else{
+            $accessToken = $this->getWXAccessToken();
+            $res = file_get_contents("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".$accessToken."&type=jsapi");
+            var_dump($res);
+            $res = json_decode($res,true);
+            $jsapi_ticket = $res['ticket'];
+
+            $_SESSION['jsapi_ticket'] = $jsapi_ticket;
+            $_SESSION['jsapi_ticket_expire_time'] = time()+7000;
+        }
+        return $jsapi_ticket;
+
+    }
+
+    //获取16随机码
+    function getRandCode($num=16){
+        $array = array(
+            'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+            '1','2','3','4','5','6','7','8','9','0'
+        );
+        $tmpstr = '';
+        $max = count($array);
+        for($i=1;$i<=$num;$i++){
+            $key = rand(0,$max-1);
+            $tmpstr.=$array[$key];
+        }
+        return $tmpstr;
+
+    }
+
+    function shareWx(){
+        //1.获取jsapi_ticket 票据
+        $jsapi_ticket = $this->getJsApiTicket();
+        $timestamp = time();
+        $nonceStr = $this->getRandCode();
+        $signature = "jsapi_ticket=".$jsapi_ticket."&noncestr=".$nonceStr."&timestamp=".$timestamp."&url=http://www.texunkeji.net/weixin/index.php/Home/index/shareWx";
+        echo $signature."<hr>";
+        $signature = sha1($signature);
+        echo $signature."<hr>";
+        file_put_contents("./signaturesha1.txt",$signature);
+        $this->assign('timestamp',$timestamp);
+        $this->assign('nonceStr',$nonceStr);
+        $this->assign('signature',$signature);
+        $this->display();
+    }
 
 }
