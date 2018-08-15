@@ -38,7 +38,7 @@ class IndexController extends Controller {
     public function reponseMsg(){
         //1.获取到微信推送过来的post数据（xml）
         $postArr = $GLOBALS['HTTP_RAW_POST_DATA'];
-
+        file_put_contents("./Public/reponseMsg.txt",$postArr);
         //2.处理消息类型，并设置回复类型和内容
 //        <xml>
 //        <ToUserName>< ![CDATA[toUser] ]></ToUserName>
@@ -49,7 +49,7 @@ class IndexController extends Controller {
 //        </xml>
 
         $postObj = simplexml_load_string($postArr);
-        file_put_contents("./Public/post.txt",$postObj->Content);
+        file_put_contents("./Public/FromUserName.txt",$postObj->FromUserName);
 //        $postObj->ToUserName = '';
 //        $postObj->FromUserName = '';
 //        $postObj->CreateTime = '';
@@ -95,13 +95,13 @@ class IndexController extends Controller {
                 "title"=>'imooc',
                 'description'=>'imooc is very cool',
                 'picUrl'=>'http://t2.hddhhn.com/uploads/tu/201612/98/st93.png',
-                'Url'=>'http://www.badiu.com'
+                'Url'=>'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx14e494d69e7d2980&redirect_uri=http://wangmutian.gotoip11.com/weixin/index.php/Home/Index/getopenid&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'
             ),
             array(
                 "title"=>'imooc',
                 'description'=>'imooc is very cool',
                 'picUrl'=>'http://t2.hddhhn.com/uploads/tu/201612/98/st93.png',
-                'Url'=>'http://www.badiu.com'
+                'Url'=>'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx14e494d69e7d2980&redirect_uri=http://wangmutian.gotoip11.com/weixin/index.php/Home/Index/getopenid&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'
             ),
 
         );
@@ -130,29 +130,61 @@ class IndexController extends Controller {
     }
 
 
-    function http_curl($url){
-//        $url = 'http://www.baidu.com';
+//    function http_curl($url){
+////        $url = 'http://www.baidu.com';
+//        //1.第一部初始化curl
+//        $ch  = curl_init();
+//        //2.设置参数
+//        curl_setopt($ch,CURLOPT_URL,$url);
+//        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+//        //3.采集
+//        $output = curl_exec($ch);
+//        //4.关闭
+//        curl_close($ch);
+//        var_dump($output);
+//    }
+
+
+    function http_curl($url,$type='get',$res = 'json',$arr){
+
         //1.第一部初始化curl
         $ch  = curl_init();
         //2.设置参数
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        if($type == 'post'){
+            curl_setopt($ch,CURLOPT_POST,1);
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$arr);
+        }
         //3.采集
+
         $output = curl_exec($ch);
         //4.关闭
         curl_close($ch);
+        if($res == 'json'){
+            return json_decode($output,true);
+        }
         var_dump($output);
     }
 
     public function getWXAccessToken(){
-        $appid = "wx14e494d69e7d2980";
-        $appSecret = "4379d39eaf51ca9d03b2f77991db901b";
+        $appid = "wxaa8996ee722227bc";
+        $appSecret = "5b45e60d9ff5625818eaf9b928a42959";
         //https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
-        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appSecret";
-        $res = file_get_contents($url);
 
-        $arr = json_decode($res, true);
-        return $arr['access_token'];
+
+
+        if($_SESSION['access_token'] && $_SESSION['expires_time']>time()){
+            //access_token 在session 并没有过期
+            return $_SESSION['access_token'];
+        }else{
+            $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appSecret";
+            $res = file_get_contents($url);
+            $arr = json_decode($res, true);
+            $_SESSION['access_token'] = $arr['access_token'];
+            $_SESSION['expires_time'] = time() + $arr['expires_in'] - 200;
+            return $arr['access_token'];
+        }
 
     }
 
@@ -162,5 +194,137 @@ class IndexController extends Controller {
         $res = file_get_contents($url);
         var_dump($res);
     }
+
+
+    public function curl(){
+        //初始化
+        $curl = curl_init();
+        //设置抓取的url
+        curl_setopt($curl, CURLOPT_URL, 'http://www.baidu.com');
+        //设置头文件的信息作为数据流输出
+        curl_setopt($curl, CURLOPT_HEADER, 1);
+        //设置获取的信息以文件流的形式返回，而不是直接输出。
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        //设置post方式提交
+        curl_setopt($curl, CURLOPT_POST, 1);
+        //设置post数据
+        $post_data = array(
+            "username" => "coder",
+            "password" => "12345"
+        );
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
+        //执行命令
+        $data = curl_exec($curl);
+        //关闭URL请求
+        curl_close($curl);
+        //显示获得的数据
+        var_dump($data);
+    }
+
+    public function definedItem(){
+        $accessToken = $this->getWXAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$accessToken;
+        echo $url;
+        $postArr = array(
+            'button'=>array(
+                array(
+                    'type'=>'click',
+                    'name'=> 'xxxx',
+                    "key"=>"item1"
+                )
+
+            )
+        );
+        echo '<br/>';
+        $postJson = json_encode($postArr);
+
+        echo $postJson;
+
+        $res = $this->http_curl($url,'post','json',$postJson);
+        var_dump($res);
+    }
+
+    //群发接口
+    function sendMsgAll(){
+        //1.获取全局access_token
+        $accessToken = $this->getWXAccessToken();
+        $url = "http://api.weixin.qq.com/cgi-bin/message/mass/preview?access_token=".$accessToken;
+        //2.组装群发接口数据 array
+        //openid :oBemTwt2xBys6X_mvXNP6SZIXjkY
+        /*
+        {
+            "touser":"OPENID",
+            "text":{
+                   "content":"CONTENT"
+                   },
+            "msgtype":"text"
+        }
+        */
+        $array=array(
+            'touser'=>"oe9JV00rBhuecekHopO7OtJUKuEI", //微信用户的openid
+            'text'=>array('content'=>"imooc is very happy"),
+            'msgtype'=>"text"
+        );
+        //3.将数组转成json
+
+        $postJson = json_encode($array);
+
+//        $res = $this->http_curl('http://www.baidu.com','post','json',$postJson);
+//        var_dump($res);
+
+
+        //初始化
+        $curl = curl_init();
+        //设置抓取的url
+        curl_setopt($curl, CURLOPT_URL, $url);
+        //设置头文件的信息作为数据流输出
+        curl_setopt($curl, CURLOPT_HEADER, 1);
+        //设置获取的信息以文件流的形式返回，而不是直接输出。
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        //设置post方式提交
+        curl_setopt($curl, CURLOPT_POST, 1);
+        //设置post数据
+
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $postJson);
+        //执行命令
+        $data = curl_exec($curl);
+        //关闭URL请求
+        curl_close($curl);
+        //显示获得的数据
+//        print_r($data);
+        var_dump(curl_errno($curl));
+        var_dump($data);
+    }
+
+
+    public function getopenid(){
+        $code = $_GET['code'];//获取code
+        echo $code;
+    }
+
+
+    //获取用户的openid
+    public function getBaseInfo(){
+        //1.获取code http://www.texunkeji.net/weixin/index.php/Home/index/weixinjieru
+        //https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect 若提示“该链接无法访问”，请检查参数是否填写错误，是否拥有scope参数对应的授权作用域权限。
+        $redirect_uri = urlencode("http://www.texunkeji.net/weixin/index.php/Home/index/getUserOpenId");
+        $url="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaa8996ee722227bc&redirect_uri=".$redirect_uri."&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+        header("location:".$url);
+        //2.获取网页授权的access_token
+        //3.拉取用户的openid
+
+    }
+
+    public function getUserOpenId(){
+        var_dump($_GET);
+        echo "<hr>";
+        $code = $_GET['code'];
+
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxaa8996ee722227bc&secret=5b45e60d9ff5625818eaf9b928a42959&code=".$code."&grant_type=authorization_code";
+        $res = file_get_contents($url);
+        var_dump($res);
+    }
+
+
 
 }
