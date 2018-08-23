@@ -1,0 +1,6 @@
+php 二维码生成
+http://phpqrcode.sourceforge.net/ 去这个网站下载案例
+
+
+jquery 二维码生成
+https://github.com/jeromeetienne/jquery-qrcode
